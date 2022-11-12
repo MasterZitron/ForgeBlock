@@ -97,7 +97,7 @@ public class ShadowFuryItem extends FBSwordItem implements IAbilityItem {
 
 	@Override
 	public AbilityResultType activateAbility(World world, PlayerEntity player, ItemStack stack) {
-		AxisAlignedBB bound = new AxisAlignedBB(player.getPositionVec().add(-12.0d, -2.0d, -12.0d), player.getPositionVec().add(12.0d, 2.0d, 12.0d));
+		AxisAlignedBB bound = new AxisAlignedBB(player.getPositionVec().add(-120.0d, -20.0d, -120.0d), player.getPositionVec().add(120.0d, 20.0d, 120.0d));
 		List<Entity> list = world.getEntitiesInAABBexcluding(player, bound, EntityPredicates.NOT_SPECTATING);
 		List<Entity> accepted = list.stream().filter((entity) -> entity.isAlive() && entity instanceof LivingEntity && entity.getDistanceSq(player) <= 144.0f).collect(Collectors.toList()); //Only alive living entities should be targetted by this ability.
 		
@@ -106,8 +106,8 @@ public class ShadowFuryItem extends FBSwordItem implements IAbilityItem {
 		
 		//Shuffle the list of accepted entities, and select 5 of them to cast the attack on (randomly).
 		Collections.shuffle(accepted);
-		player.addPotionEffect(new EffectInstance(ModEffects.IMMUNITY, 10 * ((accepted.size() > 5) ? 5 : accepted.size()), 0, true, true));
-		for(int i = 0; i < (accepted.size() > 5 ? 5 : accepted.size()); i++) {
+		player.addPotionEffect(new EffectInstance(ModEffects.IMMUNITY, 10 * ((accepted.size() > 50) ? 50 : accepted.size()), 0, true, true));
+		for(int i = 0; i < (accepted.size() > 50 ? 50 : accepted.size()); i++) {
 			int ticksAfter = 10 * i + 5;
 			Tuple<LivingEntity, LivingEntity> targets = new Tuple<>(player, (LivingEntity) accepted.get(i));
 			TickHandler.shadowFuryTarget.put(targets, TickHandler.serverTicksElapsed + ticksAfter);
@@ -137,7 +137,7 @@ public class ShadowFuryItem extends FBSwordItem implements IAbilityItem {
 
 	@Override
 	public double getAbilityCost(ItemStack stack) {
-		return 0;
+		return 20;
 	}
 
 	@Override
