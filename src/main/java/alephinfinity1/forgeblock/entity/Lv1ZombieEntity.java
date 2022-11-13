@@ -1,17 +1,11 @@
 package alephinfinity1.forgeblock.entity;
 
-import java.util.Random;
-
 import javax.annotation.Nullable;
 
 import alephinfinity1.forgeblock.ForgeBlock;
 import alephinfinity1.forgeblock.attribute.FBAttributes;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
@@ -39,9 +33,6 @@ public class Lv1ZombieEntity extends ZombieEntity implements IFBEntity {
 		this.setChild(false);
 	}
 	
-	public static boolean canSpawn(EntityType<Lv1ZombieEntity> entity, IWorld worldIn, SpawnReason reason, BlockPos pos, Random randomIn) {
-		return canMonsterSpawn(entity, worldIn, reason, pos, randomIn);
-	}
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();

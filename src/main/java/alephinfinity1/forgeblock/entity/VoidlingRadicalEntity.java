@@ -1,7 +1,5 @@
 package alephinfinity1.forgeblock.entity;
 
-import java.util.Random;
-
 import alephinfinity1.forgeblock.attribute.FBAttributes;
 import alephinfinity1.forgeblock.misc.FBCreatureAttributes;
 import net.minecraft.entity.CreatureAttribute;
@@ -9,7 +7,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
@@ -21,8 +18,6 @@ import net.minecraft.entity.monster.EndermanEntity;
 import net.minecraft.entity.monster.EndermiteEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
 public class VoidlingRadicalEntity extends EndermanEntity implements IFBEntity {
@@ -30,9 +25,7 @@ public class VoidlingRadicalEntity extends EndermanEntity implements IFBEntity {
 	public VoidlingRadicalEntity(EntityType<? extends EndermanEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
-	public static boolean canSpawn(EntityType<VoidlingRadicalEntity> entity, IWorld worldIn, SpawnReason reason, BlockPos pos, Random randomIn) {
-		return canMonsterSpawn(entity, worldIn, reason, pos, randomIn);
-	}
+
 	@Override
 	protected void registerAttributes() {
 		super.registerAttributes();

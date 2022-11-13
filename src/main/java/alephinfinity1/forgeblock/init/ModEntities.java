@@ -181,7 +181,7 @@ public class ModEntities {
         public static final RegistryObject<EntityType<OldWolfEntity>> OLD_WOLF = ENTITIES.register("old_wolf", () -> OLD_WOLF_TYPE);
         public static final RegistryObject<EntityType<PackSpiritEntity>> PACK_SPIRIT = ENTITIES.register("pack_spirit", () -> PACK_SPIRIT_TYPE);
         public static final RegistryObject<EntityType<SoulOfTheAlphaEntity>> SOUL_OF_THE_ALPHA = ENTITIES.register("soul_of_the_alpha", () -> SOUL_OF_THE_ALPHA_TYPE);
-        public static final RegistryObject<EntityType<HowlingSpiritEntity>> HOWLING_SPIRIT = ENTITIES.register("howling_spirit_wolf", () -> HOWLING_SPIRIT_TYPE);
+        public static final RegistryObject<EntityType<HowlingSpiritEntity>> HOWLING_SPIRIT = ENTITIES.register("howling_spirit", () -> HOWLING_SPIRIT_TYPE);
         public static final RegistryObject<EntityType<Lv1ZombieVillagerEntity>> LV1_ZOMBIE_VILLAGER = ENTITIES.register("lv1_zombie_villager", () -> LV1_ZOMBIE_VILLAGER_TYPE);
         public static final RegistryObject<EntityType<CryptGhoulEntity>> CRYPT_GHOUL = ENTITIES.register("crypt_ghoul", () -> CRYPT_GHOUL_TYPE);
         public static final RegistryObject<EntityType<GoldenGhoulEntity>> GOLDEN_GHOUL = ENTITIES.register("golden_ghoul", () -> GOLDEN_GHOUL_TYPE);
