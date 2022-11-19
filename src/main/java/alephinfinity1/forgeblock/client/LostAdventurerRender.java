@@ -1,5 +1,6 @@
 package alephinfinity1.forgeblock.client;
 
+import alephinfinity1.forgeblock.ForgeBlock;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.BipedArmorLayer;
@@ -10,11 +11,11 @@ import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.util.ResourceLocation;
 
-public class RenderPlayerMob<T extends MobEntity, M extends BipedModel<T>> extends MobRenderer<T, M> {
-    private static final ResourceLocation DEFAULT_RES_LOC = new ResourceLocation("textures/entity/steve.png");
-    //private static final ResourceLocation tribeTexture = new ResourceLocation(ForgeBlock.MOD_ID, "textures/entity/kalhuiki_tribe_member.png");
+public class LostAdventurerRender<T extends MobEntity, M extends BipedModel<T>> extends MobRenderer<T, M> {
+    //private static final ResourceLocation DEFAULT_RES_LOC = new ResourceLocation("textures/entity/steve.png");
+    private static final ResourceLocation tribeTexture = new ResourceLocation(ForgeBlock.MOD_ID, "textures/entity/lost_adventurer.png");
 
-    public RenderPlayerMob(EntityRendererManager renderManagerIn, M modelBipedIn, float shadowSize) {
+    public LostAdventurerRender(EntityRendererManager renderManagerIn, M modelBipedIn, float shadowSize) {
         super(renderManagerIn, modelBipedIn, shadowSize);
         this.addLayer(new HeadLayer<>(this));
         this.addLayer(new ElytraLayer<>(this));
@@ -24,6 +25,6 @@ public class RenderPlayerMob<T extends MobEntity, M extends BipedModel<T>> exten
 
 
     public ResourceLocation getEntityTexture(T entity) {
-        return DEFAULT_RES_LOC;
+        return tribeTexture;
     }
 }
