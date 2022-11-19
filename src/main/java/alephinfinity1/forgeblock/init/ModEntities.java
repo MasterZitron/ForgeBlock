@@ -6,6 +6,7 @@ import alephinfinity1.forgeblock.entity.minion.MinionEntity;
 import alephinfinity1.forgeblock.entity.minion.impl.CoalMinion;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
+
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -175,7 +176,7 @@ public class ModEntities {
         public static final EntityType<RedstonePigmanEntity> REDSTONE_PIGMAN_TYPE = EntityType.Builder.create(
                 RedstonePigmanEntity::new,
                 EntityClassification.MONSTER).size(0.6f, 2.0f).build(new ResourceLocation(ForgeBlock.MOD_ID, "redstone_pigman").toString());
-
+  
         public static final EntityType<YoungLostAdventurerEntity> YOUNG_LOST_ADVENTURER_TYPE = EntityType.Builder.create(
                 YoungLostAdventurerEntity::new,
                 EntityClassification.MONSTER).size(0.5f, 2.0f).build(new ResourceLocation(ForgeBlock.MOD_ID, "young_lost_adventurer").toString());
@@ -183,6 +184,7 @@ public class ModEntities {
         public static final EntityType<TribeMember01Entity> TRIBE_MEMBER_TYPE = EntityType.Builder.create(
                 TribeMember01Entity::new,
                 EntityClassification.CREATURE).size(0.5f, 2.0f).build(new ResourceLocation(ForgeBlock.MOD_ID, "kalhuiki_tribe_member").toString());
+
 
         
         public static final RegistryObject<EntityType<RedstonePigmanEntity>> REDSTONE_PIGMAN = ENTITIES.register("redstone_pigman", () -> REDSTONE_PIGMAN_TYPE);

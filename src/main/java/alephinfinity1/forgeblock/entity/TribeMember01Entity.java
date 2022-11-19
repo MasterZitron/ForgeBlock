@@ -1,17 +1,21 @@
 package alephinfinity1.forgeblock.entity;
 
+
 import alephinfinity1.forgeblock.ForgeBlock;
 import alephinfinity1.forgeblock.attribute.FBAttributes;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
+
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
+
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
+import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
+
 import net.minecraft.entity.monster.EndermanEntity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.monster.ZombieEntity;
@@ -22,6 +26,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+
 import net.minecraft.world.World;
 
 public class TribeMember01Entity extends MonsterEntity implements IFBEntity{
@@ -32,7 +37,7 @@ public class TribeMember01Entity extends MonsterEntity implements IFBEntity{
 	public TribeMember01Entity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
-	
+
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(1, new SwimGoal(this));
@@ -42,6 +47,7 @@ public class TribeMember01Entity extends MonsterEntity implements IFBEntity{
 		this.goalSelector.addGoal(4, new LookRandomlyGoal(this));
 		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setCallsForHelp(ZombiePigmanEntity.class));
 		this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
+
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, ZombieEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<EndermanEntity>(this, EndermanEntity.class, 5, true, false, (entity) -> {return entity instanceof EndermanEntity;}));
 	}

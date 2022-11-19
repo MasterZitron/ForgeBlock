@@ -2,6 +2,7 @@ package alephinfinity1.forgeblock.client;
 
 import java.lang.reflect.Field;
 
+
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.client.renderer.entity.*;
 import net.minecraft.client.renderer.entity.model.PlayerModel;
@@ -12,7 +13,9 @@ import org.apache.logging.log4j.MarkerManager.Log4jMarker;
 import alephinfinity1.forgeblock.ForgeBlock;
 import alephinfinity1.forgeblock.client.particles.NumericDamageIndicatorParticle;
 import alephinfinity1.forgeblock.client.screen.FBAnvilScreen;
+
 import alephinfinity1.forgeblock.entity.*;
+
 import alephinfinity1.forgeblock.entity.minion.basic.render.MinionRenderer;
 import alephinfinity1.forgeblock.init.ModContainerTypes;
 import alephinfinity1.forgeblock.init.ModEntities;
@@ -23,7 +26,7 @@ import net.minecraft.client.particle.ParticleManager;
 
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
-// import net.minecraft.entity.SpawnReason;
+
 import net.minecraft.entity.EntitySpawnPlacementRegistry.PlacementType;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.passive.AnimalEntity;
@@ -53,6 +56,7 @@ public class ClientEventBusSubscriber {
         EntitySpawnPlacementRegistry.register(ModEntities.VOIDLING_MANIAC.get(), PlacementType.ON_GROUND, Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawn);
         EntitySpawnPlacementRegistry.register(ModEntities.VOIDLING_DEVOTEE.get(), PlacementType.ON_GROUND, Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawn);
         EntitySpawnPlacementRegistry.register(ModEntities.ZEALOT.get(), PlacementType.ON_GROUND, Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawn);
+
         EntitySpawnPlacementRegistry.register(ModEntities.ATONED_REVENANT.get(), PlacementType.ON_GROUND, Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawnInLight);
         EntitySpawnPlacementRegistry.register(ModEntities.YOUNG_LOST_ADVENTURER.get(), PlacementType.ON_GROUND, Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawn);
         EntitySpawnPlacementRegistry.register(ModEntities.CRYPT_GHOUL.get(), PlacementType.ON_GROUND, Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawn);
@@ -112,6 +116,7 @@ public class ClientEventBusSubscriber {
                         .add(new Biome.SpawnListEntry(ModEntities.TARANTULA_BEAST.get(), 3, 1, 3));
                     biome.getSpawns(EntityClassification.MONSTER)
                         .add(new Biome.SpawnListEntry(ModEntities.TARANTULA_VERMIN.get(), 15, 1, 5));
+
                 }
                 else if(biome.getCategory() == Biome.Category.FOREST || biome.getCategory() == Biome.Category.SAVANNA){
                     biome.getSpawns(EntityClassification.MONSTER)
