@@ -83,7 +83,7 @@ public class AspectOfTheDragonsItem extends FBSwordItem implements IDamageAbilit
 		return list;
 	}
 
-	//XXX AotD ability behaves incorrectly as of now. Should be a cone instead of a cuboid.
+	//AotD ability behaves incorrectly as of now. Should be a cone instead of a cuboid.
 	@Override
 	public AbilityResultType activateAbility(World world, PlayerEntity player, ItemStack stack) {
 		AxisAlignedBB bound = new AxisAlignedBB(player.getPositionVector().add(player.getLookVec().rotateYaw(90.0f).rotatePitch(45.0f).scale(2).add(0, -5, 0)), player.getPositionVector().add(player.getLookVec().scale(8.0)).add(player.getLookVec().rotateYaw(90.0f).rotatePitch(45.0f).scale(-2).add(0, 5, 0)));
