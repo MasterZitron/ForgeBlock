@@ -1,34 +1,56 @@
 package alephinfinity1.forgeblock.item.swords;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import alephinfinity1.forgeblock.item.IAbilityItem;
 import alephinfinity1.forgeblock.item.IQualityItem;
+import alephinfinity1.forgeblock.misc.TickHandler;
 import alephinfinity1.forgeblock.misc.ability.AbilityResultType;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableMultimap.Builder;
 import com.google.common.collect.Multimap;
 import com.google.common.util.concurrent.AtomicDouble;
 
+import alephinfinity1.forgeblock.ForgeBlock;
 import alephinfinity1.forgeblock.attribute.FBAttributes;
 import alephinfinity1.forgeblock.init.ModEnchantments;
+import alephinfinity1.forgeblock.misc.capability.mana.IMana;
+import alephinfinity1.forgeblock.misc.capability.mana.ManaProvider;
 import alephinfinity1.forgeblock.misc.capability.stats_modifier.capability.IItemModifiers;
 import alephinfinity1.forgeblock.misc.capability.stats_modifier.capability.ItemModifiersProvider;
+import alephinfinity1.forgeblock.misc.event.FBEventHooks;
+import alephinfinity1.forgeblock.misc.event.PlayerCastSpellEvent;
 import alephinfinity1.forgeblock.misc.tier.FBTier;
+import alephinfinity1.forgeblock.network.FBPacketHandler;
+import alephinfinity1.forgeblock.network.ManaUpdatePacket;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EntityPredicates;
+import net.minecraft.util.Hand;
+import net.minecraft.util.Tuple;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 public class SilentDeathItem extends FBSwordItem implements IAbilityItem, IQualityItem {
 
@@ -36,6 +58,28 @@ public class SilentDeathItem extends FBSwordItem implements IAbilityItem, IQuali
                            double critDamageIn) {
         super(props, tier, attackDamageIn, strengthIn, critChanceIn, critDamageIn);
     }
+
+    
+    @Override
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		if(worldIn.isRemote) return ActionResult.resultPass(playerIn.getHeldItem(handIn));
+		ItemStack stack = playerIn.getHeldItem(handIn);
+		PlayerCastSpellEvent event = FBEventHooks.onPlayerCastSpell(playerIn, stack, this.getAbilityCost(stack, playerIn));
+		if(playerIn.getCapability(ManaProvider.MANA_CAPABILITY).orElseThrow(() -> new NullPointerException()).consume(event.getManaConsumed()) && !event.isCanceled()) {
+			AbilityResultType flag = activateAbility(worldIn, playerIn, stack);
+			if(flag.equals(AbilityResultType.SUCCESS)) {
+				IMana mana = playerIn.getCapability(ManaProvider.MANA_CAPABILITY).orElseThrow(NullPointerException::new);
+				FBPacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) playerIn), new ManaUpdatePacket(mana.getMana()));
+				playerIn.sendStatusMessage(new StringTextComponent(new TranslationTextComponent(this.getUnlocalizedUseAbilityName()).getString() + TextFormatting.AQUA.toString() + " (" + new DecimalFormat("#").format(event.getManaConsumed()) + " " + new TranslationTextComponent("misc.forgeblock.mana").getString() + ")"), true);
+				return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
+			} else {
+				playerIn.sendStatusMessage(new TranslationTextComponent("text.forgeblock.noTarget"), true);
+				return ActionResult.resultFail(playerIn.getHeldItem(handIn));
+			}
+		}
+		playerIn.sendStatusMessage(new StringTextComponent(new TranslationTextComponent("text.forgeblock.notEnoughMana").getString()), true);
+		return ActionResult.resultFail(playerIn.getHeldItem(handIn));
+	}
 
     @Override
     public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot, ItemStack stack) {
@@ -114,13 +158,34 @@ public class SilentDeathItem extends FBSwordItem implements IAbilityItem, IQuali
     }
 
     @Override
-    public List<ITextComponent> abilityDescription(ItemStack stack) {
-
-        return new ArrayList<ITextComponent>();
+	public List<ITextComponent> abilityDescription(ItemStack stack) {
+		List<ITextComponent> list = new ArrayList<>(); 
+		list.add(new TranslationTextComponent("text.forgeblock.sword_desc.silentdeath_0"));
+		list.add(new TranslationTextComponent("text.forgeblock.sword_desc.silentdeath_1"));
+		list.add(new TranslationTextComponent("text.forgeblock.sword_desc.silentdeath_2"));
+		list.add(new TranslationTextComponent("text.forgeblock.sword_desc.silentdeath_3"));
+		list.add(new TranslationTextComponent("text.forgeblock.sword_desc.silentdeath_4"));
+        list.add(new TranslationTextComponent("text.forgeblock.sword_desc.silentdeath_5"));
+		list.add(new StringTextComponent(new TranslationTextComponent("text.forgeblock.cooldown", new DecimalFormat("#.##").format(this.getCooldown(stack, ForgeBlock.MINECRAFT.player) / 20.0d)).getString()));
+		return list;
     }
 
     @Override
     public AbilityResultType activateAbility(World world, PlayerEntity player, ItemStack stack) {
+        AxisAlignedBB bound = new AxisAlignedBB(player.getPositionVector().add(player.getLookVec().rotateYaw(90.0f).rotatePitch(45.0f).scale(2).add(0, -5, 0)), player.getPositionVector().add(player.getLookVec().scale(8.0)).add(player.getLookVec().rotateYaw(90.0f).rotatePitch(45.0f).scale(-2).add(0, 5, 0)));
+
+        List<Entity> list = world.getEntitiesInAABBexcluding(player, bound, EntityPredicates.NOT_SPECTATING);
+		List<Entity> accepted = list.stream().filter((entity) -> entity.isAlive() && entity instanceof LivingEntity && entity.getDistanceSq(player) <= 144.0f).collect(Collectors.toList()); //Only alive living entities should be targetted by this ability.
+        for(int i = 0; i < (accepted.size() > 0 ? 1 : accepted.size()); i++) {
+			int ticksAfter = 10 * i + 5;
+			Tuple<LivingEntity, LivingEntity> targets = new Tuple<>(player, (LivingEntity) accepted.get(i));
+			TickHandler.shadowFuryTarget.put(targets, TickHandler.serverTicksElapsed + ticksAfter);
+		}
+		
+		//If no entities are in acceptable range, the ability fails.
+		if(accepted.isEmpty()) return AbilityResultType.NO_TARGET;
+
+
         return AbilityResultType.SUCCESS;
     }
 
@@ -136,12 +201,13 @@ public class SilentDeathItem extends FBSwordItem implements IAbilityItem, IQuali
 
     @Override
     public int getCooldown(ItemStack stack) {
-        return 0;
+        return 300;
     }
 
     @Override
     public int getCooldown(ItemStack stack, PlayerEntity player) {
-        return 0;
+        if(Objects.isNull(player)) return this.getCooldown(stack);
+		return 300;
     }
 
     @Override

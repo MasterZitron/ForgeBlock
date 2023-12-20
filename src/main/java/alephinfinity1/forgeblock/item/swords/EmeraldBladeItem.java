@@ -15,7 +15,6 @@ public class EmeraldBladeItem extends FBSwordItem {
 	
 	@SubscribeEvent
 	public static void onPlayerUpdate(LivingUpdateEvent event) {
-		;
 	}
 
 }

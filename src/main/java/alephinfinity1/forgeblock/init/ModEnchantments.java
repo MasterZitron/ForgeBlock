@@ -3,7 +3,7 @@ package alephinfinity1.forgeblock.init;
 import alephinfinity1.forgeblock.ForgeBlock;
 import alephinfinity1.forgeblock.enchantment.*;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.PowerEnchantment;
+
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
