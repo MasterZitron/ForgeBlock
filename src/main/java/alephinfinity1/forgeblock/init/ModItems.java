@@ -138,21 +138,39 @@ public class ModItems {
 	public static final RegistryObject<Item> IRON_SWORD = OVERRIDE.register("iron_sword", () -> new FBSwordItem(new Item.Properties().group(ModItemGroups.FB_SWORDS), FBTier.COMMON, 30, 0, 0, 0));
 	public static final RegistryObject<Item> DIAMOND_SWORD = OVERRIDE.register("diamond_sword", () -> new FBSwordItem(new Item.Properties().group(ModItemGroups.FB_SWORDS), FBTier.UNCOMMON, 35, 0, 0, 0));
 
-	public static final RegistryObject<Item> ASPECT_OF_THE_END = ITEMS.register("aspect_of_the_end", () -> new AspectOfTheEndItem(new Item.Properties().group(ModItemGroups.FB_SWORDS), FBTier.RARE, 100, 100, 0, 0));
+	/*
+	 * Swords WITHOUT abilities
+	 */
+
+	
 	public static final RegistryObject<Item> SILVER_FANG = ITEMS.register("silver_fang", () -> new FBSwordItem(new Item.Properties().group(ModItemGroups.FB_SWORDS), FBTier.UNCOMMON, 100, 0, 0, 0));
-	public static final RegistryObject<Item> LEAPING_SWORD = ITEMS.register("leaping_sword", () -> new FBSwordItem(new Item.Properties().group(ModItemGroups.FB_SWORDS), FBTier.EPIC, 150, 100, 0, 25));
-	public static final RegistryObject<Item> ASPECT_OF_THE_DRAGONS = ITEMS.register("aspect_of_the_dragons", () -> new AspectOfTheDragonsItem(new Item.Properties().group(ModItemGroups.FB_SWORDS), FBTier.LEGENDARY, 225, 100, 0, 0));
 	public static final RegistryObject<Item> SWORD_OF_THE_STARS = ITEMS.register("sword_of_the_stars", () -> new SwordOfTheStarsItem(new Item.Properties().group(ModItemGroups.FB_SWORDS), FBTier.SPECIAL, 99999, 0, 0, 0));
-	public static final RegistryObject<Item> ROGUE_SWORD = ITEMS.register("rogue_sword", () -> new RogueSwordItem(new Item.Properties().group(ModItemGroups.FB_SWORDS), FBTier.COMMON, 20, 0, 0, 0));
 	public static final RegistryObject<Item> UNDEAD_SWORD = ITEMS.register("undead_sword", () -> new UndeadSwordItem(new Item.Properties().group(ModItemGroups.FB_SWORDS), FBTier.COMMON, 30, 0, 0, 0));
 	public static final RegistryObject<Item> SPIDER_SWORD = ITEMS.register("spider_sword", () -> new SpiderSwordItem(new Item.Properties().group(ModItemGroups.FB_SWORDS), FBTier.COMMON, 30, 0, 0, 0));
 	public static final RegistryObject<Item> END_SWORD = ITEMS.register("end_sword", () -> new EndSwordItem(new Item.Properties().group(ModItemGroups.FB_SWORDS), FBTier.UNCOMMON, 35, 0, 0, 0));
 	public static final RegistryObject<Item> FANCY_SWORD = ITEMS.register("fancy_sword", () -> new FancySwordItem(new Item.Properties().group(ModItemGroups.FB_SWORDS), FBTier.COMMON, 20, 0, 0, 0));
+	public static final RegistryObject<Item> ASPECT_OF_THE_ENDER = ITEMS.register("aspect_of_the_ender", () -> new AspectOfTheEnderItem(new Item.Properties().group(ModItemGroups.FB_SWORDS), FBTier.EPIC, 175, 100, 0, 0));
+	public static final RegistryObject<Item> CUSTOM_SWORD = ITEMS.register("custom_sword", CustomSwordItem::new);
+	public static final RegistryObject<Item> ASPECT_OF_THE_JERRY = ITEMS.register("aspect_of_the_jerry", () -> new AspectOfTheJerryItem(new Item.Properties().group(ModItemGroups.FB_SWORDS), FBTier.COMMON,1,0,0,0));
+	public static final RegistryObject<Item> CLEAVER = ITEMS.register("cleaver", () -> new CleaverItem(new Item.Properties().group(ModItemGroups.FB_SWORDS), FBTier.UNCOMMON,40,10,0,0));
+	public static final RegistryObject<Item> SQUIRE_SWORD = ITEMS.register("squire_sword", () -> new SquireSwordItem(new Item.Properties().group(ModItemGroups.FB_SWORDS), FBTier.UNCOMMON,50,10,0,0));
+	public static final RegistryObject<Item> FLAMING_SWORD = ITEMS.register("flaming_sword", () -> new FlamingSwordItem(new Item.Properties().group(ModItemGroups.FB_SWORDS), FBTier.UNCOMMON,50,20,0,0));
+	public static final RegistryObject<Item> HUNTER_KNIFE = ITEMS.register("hunter_knife", () -> new HunterKnifeItem(new Item.Properties().group(ModItemGroups.FB_SWORDS), FBTier.UNCOMMON,50,0,0,0));
+	public static final RegistryObject<Item> PRISMARINE_BLADE = ITEMS.register("prismarine_blade", () -> new PrismarineBladeItem(new Item.Properties().group(ModItemGroups.FB_SWORDS), FBTier.UNCOMMON,50,25,0,0));
+	public static final RegistryObject<Item> VOIDWALKER_KATANA = ITEMS.register("voidwalker_katana", () -> new VoidwalkerKatanaItem(new Item.Properties().group(ModItemGroups.FB_SWORDS), FBTier.UNCOMMON,80,40,0,10));
+	public static final RegistryObject<Item> REVENANT_FALCHION = ITEMS.register("revenant_falchion", () -> new RevenantFalchionItem(new Item.Properties().group(ModItemGroups.FB_SWORDS), FBTier.RARE, 90, 50,0,0));
+	public static final RegistryObject<Item> REAPER_FALCHION = ITEMS.register("reaper_falchion", () -> new ReaperFalchionItem(new Item.Properties().group(ModItemGroups.FB_SWORDS), FBTier.EPIC, 120, 100,0,0));
+	/*
+	 * Swords WITH abilites
+	 */
+	public static final RegistryObject<Item> AXE_OF_THE_SHREDDED = ITEMS.register("axe_of_the_shredded", () -> new AxeOfTheShreddedItem(new Item.Properties().group(ModItemGroups.FB_SWORDS), FBTier.LEGENDARY, 140, 115,0,0));
+	public static final RegistryObject<Item> REAPER_SCYTHE = ITEMS.register("reaper_scythe", () -> new ReaperScytheItem(new Item.Properties().group(ModItemGroups.FB_SWORDS), FBTier.LEGENDARY, 333, 0, 0 ,0));
+	public static final RegistryObject<Item> ROGUE_SWORD = ITEMS.register("rogue_sword", () -> new RogueSwordItem(new Item.Properties().group(ModItemGroups.FB_SWORDS), FBTier.COMMON, 20, 0, 0, 0));
+	public static final RegistryObject<Item> ASPECT_OF_THE_END = ITEMS.register("aspect_of_the_end", () -> new AspectOfTheEndItem(new Item.Properties().group(ModItemGroups.FB_SWORDS), FBTier.RARE, 100, 100, 0, 0));
+	public static final RegistryObject<Item> LEAPING_SWORD = ITEMS.register("leaping_sword", () -> new FBSwordItem(new Item.Properties().group(ModItemGroups.FB_SWORDS), FBTier.EPIC, 150, 100, 0, 25));
+	public static final RegistryObject<Item> ASPECT_OF_THE_DRAGONS = ITEMS.register("aspect_of_the_dragons", () -> new AspectOfTheDragonsItem(new Item.Properties().group(ModItemGroups.FB_SWORDS), FBTier.LEGENDARY, 225, 100, 0, 0));
 	public static final RegistryObject<Item> SHADOW_FURY = ITEMS.register("shadow_fury", () -> new ShadowFuryItem(new Item.Properties().group(ModItemGroups.FB_SWORDS), FBTier.LEGENDARY, ModifierHelper.modifierMapFromDoubles(300, 125, 0, 0, 0, 0, 0, 0, 30, 0, 0, 0, 0, 0, "Shadow Fury Modifier", ShadowFuryItem.SHADOW_FURY_MODIFIER)));
 	public static final RegistryObject<Item> SILENT_DEATH = ITEMS.register("silent_death", () -> new SilentDeathItem(new Item.Properties().group(ModItemGroups.FB_SWORDS), FBTier.RARE, 130, 50, 1, 10));
-
-	public static final RegistryObject<Item> ASPECT_OF_THE_ENDER = ITEMS.register("aspect_of_the_ender", () -> new AspectOfTheEnderItem(new Item.Properties(), FBTier.EPIC, 175, 100, 0, 0));
-	public static final RegistryObject<Item> CUSTOM_SWORD = ITEMS.register("custom_sword", CustomSwordItem::new);
 
 	/*
 	 * Bows
