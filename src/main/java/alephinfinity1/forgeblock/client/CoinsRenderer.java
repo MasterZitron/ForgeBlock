@@ -18,6 +18,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(Dist.CLIENT)
+
+@SuppressWarnings("null")
 public class CoinsRenderer {
 	
 	@SubscribeEvent

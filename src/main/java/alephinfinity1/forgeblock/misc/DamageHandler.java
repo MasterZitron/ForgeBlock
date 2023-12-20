@@ -14,9 +14,7 @@ import alephinfinity1.forgeblock.init.ModEffects;
 import alephinfinity1.forgeblock.init.ModEnchantments;
 import alephinfinity1.forgeblock.init.ModParticles;
 import alephinfinity1.forgeblock.item.armor.CrownOfGreedItem;
-import alephinfinity1.forgeblock.item.swords.EndSwordItem;
-import alephinfinity1.forgeblock.item.swords.SpiderSwordItem;
-import alephinfinity1.forgeblock.item.swords.UndeadSwordItem;
+import alephinfinity1.forgeblock.item.swords.*;
 import alephinfinity1.forgeblock.misc.capability.coins.CoinsProvider;
 import alephinfinity1.forgeblock.misc.capability.coins.ICoins;
 import alephinfinity1.forgeblock.misc.capability.skills.SkillsHelper;
@@ -39,6 +37,7 @@ import net.minecraft.entity.monster.EndermanEntity;
 import net.minecraft.entity.monster.EndermiteEntity;
 import net.minecraft.entity.monster.MagmaCubeEntity;
 import net.minecraft.entity.monster.SlimeEntity;
+import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -249,6 +248,10 @@ public class DamageHandler {
 			result *= (1.0D + enchMultiplier + skillMultiplier);
 			
 			//Mob type-specific weapon modifier
+			if(weapon.getItem() instanceof VoidwalkerKatanaItem && (victim instanceof EndermanEntity)) result *= 2.5;
+			if(weapon.getItem() instanceof RevenantFalchionItem && (victim instanceof ZombieEntity)) result *= 2.5;
+			if(weapon.getItem() instanceof ReaperFalchionItem && (victim instanceof ZombieEntity)) result *= 3;
+			if(weapon.getItem() instanceof AxeOfTheShreddedItem && (victim instanceof ZombieEntity)) result *= 3.5;
 			if(weapon.getItem() instanceof UndeadSwordItem && victim.getCreatureAttribute().equals(CreatureAttribute.UNDEAD)) result *= 2;
 			if(weapon.getItem() instanceof SpiderSwordItem && victim.getCreatureAttribute().equals(CreatureAttribute.ARTHROPOD)) result *= 2;
 			if(weapon.getItem() instanceof EndSwordItem && (victim instanceof EndermanEntity || victim instanceof EndermiteEntity

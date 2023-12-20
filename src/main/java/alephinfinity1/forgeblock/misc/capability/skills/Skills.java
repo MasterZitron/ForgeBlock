@@ -37,6 +37,7 @@ public class Skills implements ISkills {
 	public static final UUID ENCHANTING_SKILLS_MODIFIER = UUID.fromString("cacedfe3-2776-477d-99eb-f0def6f6c967");
 	public static final UUID ALCHEMY_SKILLS_MODIFIER = UUID.fromString("58eda9ef-9c2b-4204-831c-0258c0bc241a");
 	public static final UUID TAMING_SKILLS_MODIFIER = UUID.fromString("5be88810-b564-45e1-a394-890486a3dff6");
+	public static final UUID CARPENTRY_SKILLS_MODIFIER = UUID.fromString("199e529c-8493-40de-a7be-cb45daf3c5d9");
 	
 	public Skills() {
 		data.put(FARMING, new SkillData(FARMING));

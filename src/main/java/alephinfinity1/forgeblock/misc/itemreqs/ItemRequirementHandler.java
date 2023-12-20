@@ -77,13 +77,13 @@ public class ItemRequirementHandler {
 		}
 	}
 	
-	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void onPlayerLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
 		PlayerEntity player = event.getPlayer();
 		ItemStack stack = player.getHeldItemMainhand();
 		if (stack.getItem() instanceof IRequirementItem) {
 			if (!((IRequirementItem) stack.getItem()).canPlayerUseItem(player, stack)) {
-				event.setCanceled(true);
+				event.setCanceled(false);
 				player.sendStatusMessage(new TranslationTextComponent("text.forgeblock.reqNotMet").applyTextStyle(TextFormatting.RED), true);
 				return;
 			}
