@@ -32,7 +32,6 @@ import net.minecraft.entity.monster.SlimeEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.event.EntityViewRenderEvent.CameraSetup;
 import net.minecraftforge.client.event.RenderLivingEvent;
@@ -40,6 +39,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber
+@SuppressWarnings("null")
 public class EntityRenderHandler {
 
     @SubscribeEvent
@@ -90,34 +90,37 @@ public class EntityRenderHandler {
         float f = entityIn.getHeight() + 0.5F;
         int i = "deadmau5".equals(displayNameIn) ? -10 : 0;
         matrixStackIn.push();
-
         /*
         Added the distance, so your computer doesn't just die when you load in heaps of entitys.
          */
-        if (Minecraft.getInstance().player != null && Minecraft.getInstance().player.getPosition().withinDistance(entityIn.getPosition(), 20)) {
-            matrixStackIn.translate(0.0D, (double) f, 0.0D);
-            matrixStackIn.rotate(renderManager.getCameraOrientation());
-            matrixStackIn.scale(-0.025F, -0.025F, 0.025F);
-            Matrix4f matrix4f = matrixStackIn.getLast().getMatrix();
-            float f1 = ForgeBlock.MINECRAFT.gameSettings.getTextBackgroundOpacity(0.25F);
-            int j = (int) (f1 * 255.0F) << 24;
-            FontRenderer fontrenderer = renderManager.getFontRenderer();
-            float f2 = (float) (-fontrenderer.getStringWidth(displayNameIn) / 2);
-            fontrenderer.renderString(displayNameIn, f2, (float) i, 553648127, false, matrix4f, bufferIn, flag, j, packedLightIn);
-            if (flag) {
-                fontrenderer.renderString(displayNameIn, f2, (float) i, -1, false, matrix4f, bufferIn, false, 0, packedLightIn);
-            }
+        try 
+        {
+            if (Minecraft.getInstance().player != null && Minecraft.getInstance().player.getPosition().withinDistance(entityIn.getPosition(), 20)) {
+                matrixStackIn.translate(0.0D, (double) f, 0.0D);
+                matrixStackIn.rotate(renderManager.getCameraOrientation());
+                matrixStackIn.scale(-0.025F, -0.025F, 0.025F);
+                Matrix4f matrix4f = matrixStackIn.getLast().getMatrix();
+                float f1 = ForgeBlock.MINECRAFT.gameSettings.getTextBackgroundOpacity(0.25F);
+                int j = (int) (f1 * 255.0F) << 24;
+                FontRenderer fontrenderer = renderManager.getFontRenderer();
+                float f2 = (float) (-fontrenderer.getStringWidth(displayNameIn) / 2);
+                fontrenderer.renderString(displayNameIn, f2, (float) i, 553648127, false, matrix4f, bufferIn, flag, j, packedLightIn);
+                if (flag) {
+                    fontrenderer.renderString(displayNameIn, f2, (float) i, -1, false, matrix4f, bufferIn, false, 0, packedLightIn);
+                }
+            }matrixStackIn.pop();
         }
-        matrixStackIn.pop();
+        catch (Exception e) {
+            return;
+        }
     }
-
     public static String getEntityString(Entity entity) {
         StringBuffer str = new StringBuffer("\u00A78[\u00A77Lv");
 
         //Displays entity level
         if (entity instanceof IFBEntity) {
             str.append(((IFBEntity) entity).getLevel());
-        } else if (entity instanceof PlayerEntity) { //If player, level is the sum of all non-cosmetic skill levels (max 400), or 8 times the player's true skill avg.
+        } else if (entity instanceof PlayerEntity) { //If player, level is the sum of all non-cosmetic skill levels (max a fuck ton, made it all level 100 max), or 8 times the player's true skill avg.
             ISkills skills = ((PlayerEntity) entity).getCapability(SkillsProvider.SKILLS_CAPABILITY).orElse(null);
             int playerLvl = 0;
             if (Objects.nonNull(skills)) {
@@ -141,11 +144,11 @@ public class EntityRenderHandler {
          * Passive -> green
          */
         if (entity instanceof MonsterEntity || entity instanceof SlimeEntity || entity instanceof EnderDragonEntity || entity instanceof FlyingEntity || entity.getClassification(false).equals(EntityClassification.MONSTER)) {
-            str.append("\u00A78] \u00A7c");
+            str.append("\u00A78] \u00A7c"); //red
         } else if (entity instanceof PlayerEntity) {
-            str.append("\u00A78] \u00A73");
+            str.append("\u00A78] \u00A73"); //dark cyan
         } else {
-            str.append("\u00A78] \u00A7a");
+            str.append("\u00A78] \u00A7a"); //green
         }
         str.append(entity.getName().getString());
 

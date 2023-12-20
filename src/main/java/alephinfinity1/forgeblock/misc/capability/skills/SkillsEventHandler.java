@@ -15,6 +15,9 @@ import alephinfinity1.forgeblock.misc.event.SkillXPGainEvent;
 import alephinfinity1.forgeblock.network.CoinsUpdatePacket;
 import alephinfinity1.forgeblock.network.FBPacketHandler;
 import alephinfinity1.forgeblock.network.SkillUpdatePacket;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -22,7 +25,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.EnchantmentContainer;
 import net.minecraft.inventory.container.RepairContainer;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.EntityDamageSource;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.MathHelper;
@@ -34,6 +39,7 @@ import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -155,7 +161,41 @@ public class SkillsEventHandler {
 			FBPacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new SkillUpdatePacket(skills.getCompoundNBTFor(type), notifyPlayer));
 		}
 	}
+
+	public static boolean isNaturalWoodBlock(BlockState blockState){
+		Block block = blockState.getBlock();
+		return block == Blocks.ACACIA_LOG || block == Blocks.SPRUCE_LOG || block == Blocks.OAK_LOG || block == Blocks.BIRCH_LOG || block == Blocks.JUNGLE_LOG || block == Blocks.DARK_OAK_LOG;
+	}
+
+	public static boolean isNaturalStoneBlock(BlockState blockState){
+		Block block = blockState.getBlock();
+		return block == Blocks.STONE || block == Blocks.COBBLESTONE || block == Blocks.GRAVEL || block == Blocks.ICE || block == Blocks.NETHERRACK || block == Blocks.MOSSY_COBBLESTONE;
+	}
+
+	public static boolean isNaturalSands(BlockState blockState){
+		Block block = blockState.getBlock();
+		return block == Blocks.SAND || block == Blocks.RED_SAND || block == Blocks.MYCELIUM || block == Blocks.END_STONE;
+	}
+
+	public static boolean isNaturalSpecials(BlockState blockState){
+		Block block = blockState.getBlock();
+		return block == Blocks.PRISMARINE || block == Blocks.DARK_PRISMARINE || block == Blocks.PRISMARINE_BRICKS;
+	}
 	
+	public static boolean naturalFullOres(BlockState blockState){
+		Block block = blockState.getBlock();
+		return block == Blocks.DIAMOND_BLOCK || block == Blocks.GOLD_BLOCK;
+	}
+
+	public static boolean lowlyCrops(BlockState blockState){
+		Block block = blockState.getBlock();
+		return block == Blocks.WHEAT || block == Blocks.POTATOES || block == Blocks.CARROTS || block == Blocks.MELON || block == Blocks.COCOA || block == Blocks.NETHER_WART || block == Blocks.PUMPKIN;
+	}
+
+	public static boolean lowlierCrops(BlockState blockState){
+		Block block = blockState.getBlock();
+		return block == Blocks.SUGAR_CANE || block == Blocks.CACTUS || block == Blocks.BAMBOO || block == Blocks.BEETROOTS || block == Blocks.CHORUS_PLANT || block == Blocks.MUSHROOM_STEM;
+	}
 	@SubscribeEvent
 	public static void onPlayerLogin(PlayerLoggedInEvent event) {
 		updateAllSkills(event.getPlayer(), event.getPlayer().getCapability(SkillsProvider.SKILLS_CAPABILITY).orElseThrow(NullPointerException::new), false);
@@ -231,6 +271,39 @@ public class SkillsEventHandler {
 			SkillsHelper.addXP(player, SkillType.ENCHANTING, 
 					FBEventHooks.onPlayerSkillXPGain(player, SkillType.ENCHANTING, Math.pow(-event.getLevels(), 1.5) * 3.5));
 			SkillsHelper.updateSkill((ServerPlayerEntity) player, SkillType.ENCHANTING);
+		}
+	}
+
+	@SubscribeEvent
+	public static void onBlockBreak(BlockEvent.BreakEvent event){
+		PlayerEntity player = event.getPlayer();
+		if (player instanceof ClientPlayerEntity) return;
+
+		ISkills skills = player.getCapability(SkillsProvider.SKILLS_CAPABILITY).orElse(null);
+
+		if(Objects.isNull(skills)) return;
+		if (!event.getWorld().isRemote()) {
+			if(isNaturalWoodBlock(event.getState())) {
+				SkillsHelper.addXPAndUpdate(player, SkillType.FORAGING, 6);
+			}
+			if(isNaturalSands(event.getState())) {
+				SkillsHelper.addXPAndUpdate(player, SkillType.MINING, 3);
+			}
+			if(naturalFullOres(event.getState())) {
+				SkillsHelper.addXPAndUpdate(player, SkillType.MINING, 20);
+			}
+			if(isNaturalStoneBlock(event.getState())) {
+				SkillsHelper.addXPAndUpdate(player, SkillType.MINING, 1);
+			}
+			if(isNaturalSpecials(event.getState())) {
+				SkillsHelper.addXPAndUpdate(player, SkillType.MINING, 45);
+			}
+			if(lowlyCrops(event.getState())){
+				SkillsHelper.addXPAndUpdate(player, SkillType.FARMING, 4);
+			}
+			if(lowlierCrops(event.getState())){
+				SkillsHelper.addXPAndUpdate(player, SkillType.FARMING, 2);
+			}
 		}
 	}
 	

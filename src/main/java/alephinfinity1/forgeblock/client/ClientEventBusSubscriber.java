@@ -1,21 +1,14 @@
 package alephinfinity1.forgeblock.client;
-
 import java.lang.reflect.Field;
-
-
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.client.renderer.entity.*;
 import net.minecraft.client.renderer.entity.model.PlayerModel;
-
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.MarkerManager.Log4jMarker;
-
 import alephinfinity1.forgeblock.ForgeBlock;
 import alephinfinity1.forgeblock.client.particles.NumericDamageIndicatorParticle;
 import alephinfinity1.forgeblock.client.screen.FBAnvilScreen;
-
 import alephinfinity1.forgeblock.entity.*;
-
 import alephinfinity1.forgeblock.entity.minion.basic.render.MinionRenderer;
 import alephinfinity1.forgeblock.init.ModContainerTypes;
 import alephinfinity1.forgeblock.init.ModEntities;
@@ -23,10 +16,10 @@ import alephinfinity1.forgeblock.init.ModParticles;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.particle.ParticleManager;
-
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
-
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EntitySpawnPlacementRegistry.PlacementType;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.passive.AnimalEntity;
@@ -44,6 +37,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 @Mod.EventBusSubscriber(modid = ForgeBlock.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
+
 public class ClientEventBusSubscriber {
 
     public static final Minecraft mc = Minecraft.getInstance();
@@ -103,20 +97,19 @@ public class ClientEventBusSubscriber {
             else {
                 if (biome.getCategory() != Biome.Category.OCEAN && biome.getCategory() != Biome.Category.RIVER && biome.getCategory() != Biome.Category.JUNGLE) {
                     biome.getSpawns(EntityClassification.MONSTER)
-                        .add(new Biome.SpawnListEntry(ModEntities.LV1_ZOMBIE.get(), 100, 5, 6));
+                        .add(new Biome.SpawnListEntry(ModEntities.LV1_ZOMBIE.get(), 200, 5, 6));
                     biome.getSpawns(EntityClassification.MONSTER)
-                        .add(new Biome.SpawnListEntry(ModEntities.LV1_ZOMBIE_VILLAGER.get(), 70, 2, 3));
+                        .add(new Biome.SpawnListEntry(ModEntities.LV1_ZOMBIE_VILLAGER.get(), 140, 2, 3));
                     biome.getSpawns(EntityClassification.MONSTER)
-                        .add(new Biome.SpawnListEntry(ModEntities.CRYPT_GHOUL.get(), 50, 3, 6));
+                        .add(new Biome.SpawnListEntry(ModEntities.CRYPT_GHOUL.get(), 30, 1, 3));
                     biome.getSpawns(EntityClassification.MONSTER)
-                        .add(new Biome.SpawnListEntry(ModEntities.GOLDEN_GHOUL.get(), 20, 1, 1));
+                        .add(new Biome.SpawnListEntry(ModEntities.GOLDEN_GHOUL.get(), 1, 1, 2));
                     biome.getSpawns(EntityClassification.MONSTER)
-                        .add(new Biome.SpawnListEntry(ModEntities.DASHER_SPIDER.get(), 15, 1, 3));
+                        .add(new Biome.SpawnListEntry(ModEntities.DASHER_SPIDER.get(), 5, 1, 1));
                     biome.getSpawns(EntityClassification.MONSTER)
-                        .add(new Biome.SpawnListEntry(ModEntities.TARANTULA_BEAST.get(), 3, 1, 3));
+                        .add(new Biome.SpawnListEntry(ModEntities.TARANTULA_BEAST.get(), 3, 1, 1));
                     biome.getSpawns(EntityClassification.MONSTER)
-                        .add(new Biome.SpawnListEntry(ModEntities.TARANTULA_VERMIN.get(), 15, 1, 5));
-
+                        .add(new Biome.SpawnListEntry(ModEntities.TARANTULA_VERMIN.get(), 1, 1, 2));
                 }
                 else if(biome.getCategory() == Biome.Category.FOREST || biome.getCategory() == Biome.Category.SAVANNA){
                     biome.getSpawns(EntityClassification.MONSTER)
@@ -140,7 +133,7 @@ public class ClientEventBusSubscriber {
     public static void onClientSetup(FMLClientSetupEvent event) {
         //Entities
         RenderingRegistry.registerEntityRenderingHandler(ModEntities.KALHUIKI_TRIBE_MEMBER.get(), (erm) -> new TribeMemberRender<TribeMember01Entity, PlayerModel<TribeMember01Entity>>(erm, new PlayerModel<>(0, false), 0));
-        RenderingRegistry.registerEntityRenderingHandler(ModEntities.YOUNG_LOST_ADVENTURER.get(), (erm) -> new LostAdventurerRender<YoungLostAdventurerEntity, PlayerModel<YoungLostAdventurerEntity>>(erm, new PlayerModel<>(0, false), 0));
+        RenderingRegistry.registerEntityRenderingHandler(ModEntities.YOUNG_LOST_ADVENTURER.get(), (erm) -> new LostAdventurerRender<YoungLostAdventurerEntity, PlayerModel<YoungLostAdventurerEntity>>(erm, new PlayerModel<>(0, true), 0));
         RenderingRegistry.registerEntityRenderingHandler(ModEntities.LV1_ZOMBIE.get(), ZombieRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntities.LV1_SLIME.get(), SlimeRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntities.LV1_ENDERMAN.get(), EndermanRenderer::new);

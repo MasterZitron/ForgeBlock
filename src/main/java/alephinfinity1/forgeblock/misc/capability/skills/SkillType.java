@@ -20,15 +20,15 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public enum SkillType {
-	FARMING(false, "farming", 50, null, null, SharedMonsterAttributes.MAX_HEALTH, SkillsCapabilityHandler.ATTRIBUTE_MODIFIER_AMOUNT_1, Skills.FARMING_SKILLS_MODIFIER),
-	MINING(false, "mining", 50, null, null, FBAttributes.DEFENSE, SkillsCapabilityHandler.ATTRIBUTE_MODIFIER_AMOUNT_2, Skills.MINING_SKILLS_MODIFIER),
-	COMBAT(false, "combat", 50, null, null, FBAttributes.CRIT_CHANCE, SkillsCapabilityHandler.ATTRIBUTE_MODIFIER_AMOUNT_COMBAT, Skills.COMBAT_SKILLS_MODIFIER),
-	FORAGING(false, "foraging", 50, null, null, FBAttributes.STRENGTH, SkillsCapabilityHandler.ATTRIBUTE_MODIFIER_AMOUNT_2, Skills.FORAGING_SKILLS_MODIFIER),
-	FISHING(false, "fishing", 50, null, null, SharedMonsterAttributes.MAX_HEALTH, SkillsCapabilityHandler.ATTRIBUTE_MODIFIER_AMOUNT_1, Skills.FISHING_SKILLS_MODIFIER),
-	ENCHANTING(false, "enchanting", 50, null, null, FBAttributes.INTELLIGENCE, SkillsCapabilityHandler.ATTRIBUTE_MODIFIER_AMOUNT_2, Skills.ENCHANTING_SKILLS_MODIFIER),
-	ALCHEMY(false, "alchemy", 50, null, null, FBAttributes.INTELLIGENCE, SkillsCapabilityHandler.ATTRIBUTE_MODIFIER_AMOUNT_2, Skills.ALCHEMY_SKILLS_MODIFIER),
-	TAMING(false, "taming", 50, null, null, FBAttributes.PET_LUCK, SkillsCapabilityHandler.ATTRIBUTE_MODIFIER_AMOUNT_TAMING, Skills.TAMING_SKILLS_MODIFIER),
-	CARPENTRY(true, "carpentry", 50),
+	FARMING(false, "farming", 100, null, null, SharedMonsterAttributes.MAX_HEALTH, SkillsCapabilityHandler.ATTRIBUTE_MODIFIER_AMOUNT_1, Skills.FARMING_SKILLS_MODIFIER),
+	MINING(false, "mining", 100, null, null, FBAttributes.DEFENSE, SkillsCapabilityHandler.ATTRIBUTE_MODIFIER_AMOUNT_2, Skills.MINING_SKILLS_MODIFIER),
+	COMBAT(false, "combat", 100, null, null, FBAttributes.CRIT_CHANCE, SkillsCapabilityHandler.ATTRIBUTE_MODIFIER_AMOUNT_COMBAT, Skills.COMBAT_SKILLS_MODIFIER),
+	FORAGING(false, "foraging", 100, null, null, FBAttributes.STRENGTH, SkillsCapabilityHandler.ATTRIBUTE_MODIFIER_AMOUNT_2, Skills.FORAGING_SKILLS_MODIFIER),
+	FISHING(false, "fishing", 100, null, null, SharedMonsterAttributes.MAX_HEALTH, SkillsCapabilityHandler.ATTRIBUTE_MODIFIER_AMOUNT_1, Skills.FISHING_SKILLS_MODIFIER),
+	ENCHANTING(false, "enchanting", 100, null, null, FBAttributes.INTELLIGENCE, SkillsCapabilityHandler.ATTRIBUTE_MODIFIER_AMOUNT_2, Skills.ENCHANTING_SKILLS_MODIFIER),
+	ALCHEMY(false, "alchemy", 100, null, null, FBAttributes.INTELLIGENCE, SkillsCapabilityHandler.ATTRIBUTE_MODIFIER_AMOUNT_2, Skills.ALCHEMY_SKILLS_MODIFIER),
+	TAMING(false, "taming", 100, null, null, FBAttributes.PET_LUCK, SkillsCapabilityHandler.ATTRIBUTE_MODIFIER_AMOUNT_TAMING, Skills.TAMING_SKILLS_MODIFIER),
+	CARPENTRY(false, "carpentry", 100,  null, null, SharedMonsterAttributes.MAX_HEALTH, SkillsCapabilityHandler.ATTRIBUTE_MODIFIER_AMOUNT_1, Skills.CARPENTRY_SKILLS_MODIFIER),
 	RUNECRAFTING(true, "runecrafting", 25);
 	
 	/**
@@ -471,6 +471,7 @@ public enum SkillType {
 			FISHING,
 			ENCHANTING,
 			ALCHEMY,
+			CARPENTRY,
 			TAMING
 	};
 	
