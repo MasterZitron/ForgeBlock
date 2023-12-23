@@ -44,17 +44,19 @@ public class YoungLostAdventurerEntity extends ZombieEntity implements IFBEntity
 	}
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(1, new SwimGoal(this));
-		this.goalSelector.addGoal(2, new LeapAtTargetGoal(this, 0.4F));
-
-		this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.0D, false));
-		this.goalSelector.addGoal(2, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
-		this.goalSelector.addGoal(4, new LookAtGoal(this, PlayerEntity.class, 5.0F));
-		this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
+		this.goalSelector.addGoal(0, new MeleeAttackGoal(this, 4.0D, false));
 		this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
+		this.goalSelector.addGoal(3, new LeapAtTargetGoal(this, 0.5F));
+		this.goalSelector.addGoal(4, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
+		this.goalSelector.addGoal(6, new SwimGoal(this));
+
+		
+		
+		this.goalSelector.addGoal(5, new LookAtGoal(this, PlayerEntity.class, 5.0F));
+		this.goalSelector.addGoal(10, new LookRandomlyGoal(this));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
-		this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Lv1ZombieEntity.class, true));
-		this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<EndermanEntity>(this, EndermanEntity.class, 5, true, true, (entity) -> {return entity instanceof EndermanEntity;}));
+		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Lv1ZombieEntity.class, true));
+		this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<EndermanEntity>(this, EndermanEntity.class, 5, true, true, (entity) -> {return entity instanceof EndermanEntity;}));
 	}
 
 	@Override

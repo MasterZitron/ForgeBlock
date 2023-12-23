@@ -168,6 +168,7 @@ public class ModItems {
 	 * Swords WITH abilites
 	 */
 	public static final RegistryObject<Item> FROZEN_SCYTHE = ITEMS.register("frozen_scythe", () -> new FrozenScytheItem(new Item.Properties().group(ModItemGroups.FB_SWORDS), FBTier.RARE, 80, 0,0,0));
+	public static final RegistryObject<Item> HYPERION = ITEMS.register("hyperion", () -> new HyperionItem(new Item.Properties().group(ModItemGroups.FB_SWORDS), FBTier.LEGENDARY, ModifierHelper.modifierMapFromDoubles(260, 150, 0, 0, 0, 0, 0, 0, 0, 350, 0, 0, 0, 30)));
 	public static final RegistryObject<Item> VOIDEDGE_KATANA = ITEMS.register("voidedge_katana", () -> new VoidedgeKatanaItem(new Item.Properties().group(ModItemGroups.FB_SWORDS), FBTier.RARE, ModifierHelper.modifierMapFromDoubles(125, 60, 0, 20, 0, 0, 0, 0, 0, 50, 0, 0, 0, 0)));
 	public static final RegistryObject<Item> GOLEM_SWORD = ITEMS.register("golem_sword", () -> new GolemSwordItem(new Item.Properties().group(ModItemGroups.FB_SWORDS), FBTier.RARE, ModifierHelper.modifierMapFromDoubles(80, 125, 0, 0, 0, 0, 0, 25, 0, 0, 0, 0, 0, 0)));
 	public static final RegistryObject<Item> RECLUSE_FANG = ITEMS.register("recluse_fang", () -> new RecluseFangItem(new Item.Properties().group(ModItemGroups.FB_SWORDS), FBTier.RARE, 120, 30,0,20));
