@@ -40,16 +40,16 @@ public class TribeMember01Entity extends MonsterEntity implements IFBEntity{
 
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(1, new SwimGoal(this));
-		this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 1.0D, true));
-		this.goalSelector.addGoal(4, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
-		this.goalSelector.addGoal(3, new LookAtGoal(this, PlayerEntity.class, 8.0F));
-		this.goalSelector.addGoal(4, new LookRandomlyGoal(this));
-		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setCallsForHelp(ZombiePigmanEntity.class));
+		this.goalSelector.addGoal(0, new LookAtGoal(this, PlayerEntity.class, 8.0F));
+		this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.0D, true));
+		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setCallsForHelp());
 		this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
+		this.goalSelector.addGoal(3, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
+		this.goalSelector.addGoal(6, new SwimGoal(this));
+		this.goalSelector.addGoal(10, new LookRandomlyGoal(this));
 
-		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, ZombieEntity.class, true));
-		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<EndermanEntity>(this, EndermanEntity.class, 5, true, false, (entity) -> {return entity instanceof EndermanEntity;}));
+		this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, ZombieEntity.class, true));
+		this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<EndermanEntity>(this, EndermanEntity.class, 5, true, false, (entity) -> {return entity instanceof EndermanEntity;}));
 	}
 
 	@Override

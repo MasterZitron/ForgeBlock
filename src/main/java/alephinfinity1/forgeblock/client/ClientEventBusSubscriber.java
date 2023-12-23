@@ -7,7 +7,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.MarkerManager.Log4jMarker;
 import alephinfinity1.forgeblock.ForgeBlock;
 import alephinfinity1.forgeblock.client.particles.NumericDamageIndicatorParticle;
-import alephinfinity1.forgeblock.client.screen.FBAnvilScreen;
+import alephinfinity1.forgeblock.client.screen.FBAnvilScreen; 
 import alephinfinity1.forgeblock.entity.*;
 import alephinfinity1.forgeblock.entity.minion.basic.render.MinionRenderer;
 import alephinfinity1.forgeblock.init.ModContainerTypes;
@@ -16,10 +16,8 @@ import alephinfinity1.forgeblock.init.ModParticles;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.particle.ParticleManager;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EntitySpawnPlacementRegistry.PlacementType;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.passive.AnimalEntity;
@@ -35,7 +33,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.registries.ForgeRegistries;
-
 @Mod.EventBusSubscriber(modid = ForgeBlock.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 
 public class ClientEventBusSubscriber {
@@ -65,37 +62,49 @@ public class ClientEventBusSubscriber {
         EntitySpawnPlacementRegistry.register(ModEntities.REDSTONE_PIGMAN.get(), PlacementType.ON_GROUND, Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawn);
 
         for (Biome biome : ForgeRegistries.BIOMES) {
+            // if its an ocean biome, river biome, deep ocean or beach biome, don't spawn
+            if (biome.getCategory() == Biome.Category.OCEAN || biome.getCategory() == Biome.Category.RIVER
+                    || biome.getCategory() == Biome.Category.NONE || biome.getCategory() == Biome.Category.BEACH) {
+                continue;
+            }
+            switch (biome.getCategory()) {
+                case NETHER: 
+                    biome.getSpawns(EntityClassification.MONSTER)
+                            .add(new Biome.SpawnListEntry(ModEntities.ATONED_REVENANT.get(), 1, 1, 1));
+                    biome.getSpawns(EntityClassification.MONSTER)
+                            .add(new Biome.SpawnListEntry(ModEntities.LV50_ENDERMAN.get(), 20, 1, 6));
+                    biome.getSpawns(EntityClassification.MONSTER)
+                            .add(new Biome.SpawnListEntry(ModEntities.YOUNG_LOST_ADVENTURER.get(), 1, 1, 1));
+                    biome.getSpawns(EntityClassification.MONSTER)
+                            .add(new Biome.SpawnListEntry(ModEntities.REDSTONE_PIGMAN.get(), 80, 6, 10));
+                    break;
+                case THEEND:
+                    biome.getSpawns(EntityClassification.MONSTER)
+                            .add(new Biome.SpawnListEntry(ModEntities.LV50_ENDERMAN.get(), 8, 1, 3));
+                    biome.getSpawns(EntityClassification.MONSTER)
+                            .add(new Biome.SpawnListEntry(ModEntities.LV42_ENDERMAN.get(), 10, 1, 5));
+                    biome.getSpawns(EntityClassification.MONSTER)
+                            .add(new Biome.SpawnListEntry(ModEntities.LV45_ENDERMAN.get(), 20, 1, 7));
+                    biome.getSpawns(EntityClassification.MONSTER)
+                            .add(new Biome.SpawnListEntry(ModEntities.VOIDLING_MANIAC.get(), 1, 1, 1));
+                    biome.getSpawns(EntityClassification.MONSTER)
+                            .add(new Biome.SpawnListEntry(ModEntities.VOIDLING_DEVOTEE.get(), 1, 1, 2));
+                    biome.getSpawns(EntityClassification.MONSTER)
+                            .add(new Biome.SpawnListEntry(ModEntities.ZEALOT.get(), 1, 5, 7));
+                    break;
 
-            // Some Spicy in the nether
-            if (biome.getCategory() == Biome.Category.NETHER) { 
-                biome.getSpawns(EntityClassification.MONSTER)
-                        .add(new Biome.SpawnListEntry(ModEntities.ATONED_REVENANT.get(), 1, 1, 1));
-                biome.getSpawns(EntityClassification.MONSTER)
-                        .add(new Biome.SpawnListEntry(ModEntities.LV50_ENDERMAN.get(), 20, 1, 6));
-                biome.getSpawns(EntityClassification.MONSTER)
-                        .add(new Biome.SpawnListEntry(ModEntities.YOUNG_LOST_ADVENTURER.get(), 1, 1, 1));
-                biome.getSpawns(EntityClassification.MONSTER)
-                        .add(new Biome.SpawnListEntry(ModEntities.REDSTONE_PIGMAN.get(), 80, 6, 10));
-                
-            }
-            // Mega spice in the end
-            else if (biome.getCategory() == Biome.Category.THEEND) {
-                biome.getSpawns(EntityClassification.MONSTER)
-                        .add(new Biome.SpawnListEntry(ModEntities.LV50_ENDERMAN.get(), 8, 1, 3));
-                biome.getSpawns(EntityClassification.MONSTER)
-                        .add(new Biome.SpawnListEntry(ModEntities.LV42_ENDERMAN.get(), 10, 1, 5));
-                biome.getSpawns(EntityClassification.MONSTER)
-                        .add(new Biome.SpawnListEntry(ModEntities.LV45_ENDERMAN.get(), 20, 1, 7));
-                biome.getSpawns(EntityClassification.MONSTER)
-                        .add(new Biome.SpawnListEntry(ModEntities.VOIDLING_MANIAC.get(), 1, 1, 1));
-                biome.getSpawns(EntityClassification.MONSTER)
-                        .add(new Biome.SpawnListEntry(ModEntities.VOIDLING_DEVOTEE.get(), 1, 1, 2));
-                biome.getSpawns(EntityClassification.MONSTER)
-                        .add(new Biome.SpawnListEntry(ModEntities.ZEALOT.get(), 1, 5, 7));
-            }
-            // Overwold spiceness
-            else {
-                if (biome.getCategory() != Biome.Category.OCEAN && biome.getCategory() != Biome.Category.RIVER && biome.getCategory() != Biome.Category.JUNGLE) {
+
+                default:
+                    biome.getSpawns(EntityClassification.MONSTER)
+                        .add(new Biome.SpawnListEntry(ModEntities.PACK_ENFORCER.get(), 10, 2, 3));
+                    biome.getSpawns(EntityClassification.MONSTER)
+                        .add(new Biome.SpawnListEntry(ModEntities.PACK_SPIRIT.get(), 10, 2, 3));
+                    biome.getSpawns(EntityClassification.MONSTER)
+                        .add(new Biome.SpawnListEntry(ModEntities.LV15_WOLF.get(), 10, 2, 3));
+                    biome.getSpawns(EntityClassification.MONSTER)
+                        .add(new Biome.SpawnListEntry(ModEntities.OLD_WOLF.get(), 5, 1, 1));
+                    biome.getSpawns(EntityClassification.MONSTER)
+                        .add(new Biome.SpawnListEntry(ModEntities.SOUL_OF_THE_ALPHA.get(), 1, 1, 1));
                     biome.getSpawns(EntityClassification.MONSTER)
                         .add(new Biome.SpawnListEntry(ModEntities.LV1_ZOMBIE.get(), 200, 5, 6));
                     biome.getSpawns(EntityClassification.MONSTER)
@@ -110,22 +119,11 @@ public class ClientEventBusSubscriber {
                         .add(new Biome.SpawnListEntry(ModEntities.TARANTULA_BEAST.get(), 3, 1, 1));
                     biome.getSpawns(EntityClassification.MONSTER)
                         .add(new Biome.SpawnListEntry(ModEntities.TARANTULA_VERMIN.get(), 1, 1, 2));
-                }
-                else if(biome.getCategory() == Biome.Category.FOREST || biome.getCategory() == Biome.Category.SAVANNA){
-                    biome.getSpawns(EntityClassification.MONSTER)
-                        .add(new Biome.SpawnListEntry(ModEntities.PACK_ENFORCER.get(), 10, 2, 3));
-                    biome.getSpawns(EntityClassification.MONSTER)
-                        .add(new Biome.SpawnListEntry(ModEntities.PACK_SPIRIT.get(), 10, 2, 3));
-                    biome.getSpawns(EntityClassification.MONSTER)
-                        .add(new Biome.SpawnListEntry(ModEntities.LV15_WOLF.get(), 10, 2, 3));
-                    biome.getSpawns(EntityClassification.MONSTER)
-                        .add(new Biome.SpawnListEntry(ModEntities.OLD_WOLF.get(), 5, 1, 1));
-                    biome.getSpawns(EntityClassification.MONSTER)
-                        .add(new Biome.SpawnListEntry(ModEntities.SOUL_OF_THE_ALPHA.get(), 1, 1, 1));
+                    break;
                 }
             }
         }
-    }
+    
     /**
      * XXX The anvil register part is wonky.
      */
@@ -224,6 +222,7 @@ public class ClientEventBusSubscriber {
         }
     }
 
+    
     @SubscribeEvent
     public static void onParticleFactoryRegister(ParticleFactoryRegisterEvent event) {
         ParticleManager pm = ForgeBlock.MINECRAFT.particles;
