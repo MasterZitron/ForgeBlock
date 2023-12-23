@@ -12,7 +12,6 @@ import net.minecraft.entity.MobEntity;
 import net.minecraft.util.ResourceLocation;
 
 public class TribeMemberRender<T extends MobEntity, M extends BipedModel<T>> extends MobRenderer<T, M> {
-    //private static final ResourceLocation DEFAULT_RES_LOC = new ResourceLocation("textures/entity/steve.png");
     private static final ResourceLocation tribeTexture = new ResourceLocation(ForgeBlock.MOD_ID, "textures/entity/kalhuiki_tribe_member.png");
 
     public TribeMemberRender(EntityRendererManager renderManagerIn, M modelBipedIn, float shadowSize) {

@@ -16,4 +16,8 @@ public class ReaperFalchionItem extends FBSwordItem{
 			double critDamageIn) {
 		super(props, tier, attackDamageIn, strengthIn, critChanceIn, critDamageIn);
 	}
+
+	public ReaperFalchionItem(Properties props, FBTier tier, Multimap<String, AttributeModifier> modifiers) {
+		super(props, tier, modifiers);
+	}
 }

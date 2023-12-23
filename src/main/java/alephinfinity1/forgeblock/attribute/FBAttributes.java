@@ -69,7 +69,7 @@ public final class FBAttributes {
 	//List
 	public static final IAttribute[] PRIMARY_ATTRIBUTES = new IAttribute[] {SharedMonsterAttributes.ATTACK_DAMAGE, STRENGTH, CRIT_CHANCE,
 			CRIT_DAMAGE, BONUS_ATTACK_SPEED, SEA_CREATURE_CHANCE, SharedMonsterAttributes.MAX_HEALTH, DEFENSE, SharedMonsterAttributes.MOVEMENT_SPEED,
-			INTELLIGENCE, TRUE_DEFENSE, MAGIC_FIND, PET_LUCK, FEROCITY, ABILITY_DAMAGE};
+			INTELLIGENCE, TRUE_DEFENSE, MAGIC_FIND, PET_LUCK, FEROCITY}; // removed ability damage from primary as full superior was crashing the game
 	
 	public static final IAttribute[] OFFENSIVE_ATTRIBUTES = new IAttribute[] {SharedMonsterAttributes.ATTACK_DAMAGE, STRENGTH, CRIT_CHANCE, CRIT_DAMAGE,
 			BONUS_ATTACK_SPEED, SEA_CREATURE_CHANCE, FEROCITY, ABILITY_DAMAGE};
